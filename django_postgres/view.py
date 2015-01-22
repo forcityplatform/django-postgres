@@ -175,8 +175,7 @@ class View(models.Model):
                 _DEFERRED_PROJECTIONS[model_spec][view_cls].append(field_name)
                 # If the model has already been loaded, run
                 # `realize_deferred_projections()` on it.
-                model_cls = models.get_model(app_label, model_name,
-                                             seed_cache=False)
+                model_cls = models.get_model(app_label, model_name)
                 if model_cls is not None:
                     realize_deferred_projections(model_cls)
             return view_cls
