@@ -53,6 +53,10 @@ def realize_deferred_projections(sender, *args, **kwargs):
             # attribute or explicitly-defined field with that name.
             if hasattr(view_cls, name) or hasfield(view_cls, name):
                 continue
+            if isinstance(field, (models.ForeignKey,
+                                  models.OneToOneField,
+                                  models.ManyToManyField)):
+                field.rel.related_name = '+'
             copy.copy(field).contribute_to_class(view_cls, name)
 models.signals.class_prepared.connect(realize_deferred_projections)
 
